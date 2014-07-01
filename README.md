@@ -2,7 +2,7 @@
 
 Go support library to aide and enhance using environment variables for configuration.
 
-Please see [the examples directory](examples/) for . API Documentation is available [here](http://godoc.org/github.com/danryan/env).
+Please see [the examples directory](examples/) for inspiration. API Documentation is available [here](http://godoc.org/github.com/danryan/env).
 
 
 ## Getting started
