@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"reflect"
+	_ "regexp"
 	"strconv"
 	"strings"
 )
@@ -38,10 +39,10 @@ func NewVar(field reflect.StructField) (*Var, error) {
 
 		// Check if we have a default value to set, otherwise set the type's zero value
 		if newVar.Default != reflect.ValueOf(nil) {
-			fmt.Println("setting default:", newVar.Default.String())
+			// fmt.Println("setting default:", newVar.Default.String())
 			newVar.SetValue(newVar.Default)
 		} else {
-			fmt.Println("No default; setting zero value")
+			// fmt.Println("No default; setting zero value")
 			newVar.SetValue(reflect.Zero(newVar.Type))
 		}
 	}
@@ -96,6 +97,12 @@ func (v *Var) SetOptions(values []reflect.Value) {
 
 // SetKey sets Var.Key
 func (v *Var) SetKey(value string) {
+	// src := []byte(value)
+	// regex := regexp.MustCompile("[0-9A-Za-z]+")
+	// chunks := regex.FindAll(src, -1)
+	// for i, val := range chunks {
+	//
+	// }
 	v.Key = strings.ToUpper(value)
 }
 
