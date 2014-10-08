@@ -7,6 +7,7 @@ import (
 	_ "regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Var struct
@@ -22,11 +23,16 @@ type Var struct {
 
 // NewVar returns a new Var
 func NewVar(field reflect.StructField) (*Var, error) {
+	return NewVarWithFunc(field, os.Getenv)
+}
+
+// NewVarWithFunc returns a new Var. get returns the value for the given key
+func NewVarWithFunc(field reflect.StructField, get func(string) string) (*Var, error) {
 	// spew.Dump(new(Var).Default == reflect.ValueOf(nil))
 	newVar := &Var{} //Default: reflect.ValueOf(nil)}
 	newVar.Parse(field)
 
-	value, err := convert(newVar.Type, os.Getenv(newVar.Key))
+	value, err := convert(newVar.Type, get(newVar.Key))
 	if err != nil {
 		return newVar, err
 	}
@@ -168,6 +174,15 @@ func convert(t reflect.Type, value string) (reflect.Value, error) {
 		return reflect.ValueOf(nil), nil
 	}
 
+	var d time.Duration
+
+	switch t {
+	case reflect.TypeOf(d):
+		result, err := time.ParseDuration(value)
+		return reflect.ValueOf(result), err
+	default:
+	}
+
 	switch t.Kind() {
 	case reflect.String:
 		return reflect.ValueOf(value), nil
@@ -177,7 +192,6 @@ func convert(t reflect.Type, value string) (reflect.Value, error) {
 	case reflect.Int:
 		return parseInt(value)
 	case reflect.Bool:
-
 		return parseBool(value)
 	}
 
