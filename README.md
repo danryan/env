@@ -39,16 +39,17 @@ func main() {
 ```
 
 
-This library uses runtime reflection just like `encoding/json`. Most programs won't have more than a handful of config objects, so the slowness typically associated with reflection is negligible here. 
+This library uses runtime reflection just like `encoding/json`. Most programs won't have more than a handful of config objects, so the slowness typically associated with reflection is negligible here.
 
 ### Supported types
 
-Four types are currently supported: 
+Four types are currently supported:
 
 * `string` - defaults to `""`
 * `int` - defaults to `0`
 * `bool` - defaults to `false`
-* `float64` - defaults to `0.0` 
+* `float64` - defaults to `0.0`
+* `time.Duration` - defaults to `0`
 
 Support for custom types via interfaces will likely make an an appearance at a later date.
 
@@ -85,7 +86,7 @@ type Config struct {
 
 #### `default`
 
-If specified, the default will be used if no environment variable is found matching the key. Default values must be castable to the associated struct field type, otherwise an error is returned. 
+If specified, the default will be used if no environment variable is found matching the key. Default values must be castable to the associated struct field type, otherwise an error is returned.
 
 ```go
 // Look for a variable `ENABLED` or otherwise default to true
@@ -108,7 +109,7 @@ config := &Config{}
 fmt.Println(config.Name) // prints "Inigo"
 ```
 
-#### `options` 
+#### `options`
 
 Options ensure that an environment variable is in a set of possible valid values. If it is not, an error is returned.
 
