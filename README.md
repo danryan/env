@@ -50,7 +50,7 @@ Four types are currently supported:
 * `bool` - defaults to `false`
 * `float64` - defaults to `0.0` 
 
-Support for custom types via interfaces will likely make an an appearance at a later date.
+Support for custom types via interfaces will likely make an appearance at a later date.
 
 ### Struct tags
 
